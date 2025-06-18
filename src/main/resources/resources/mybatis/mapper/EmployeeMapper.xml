@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.EmployeeMapper">
+
+    <select id="findAll" resultType="employee">
+        SELECT *
+        FROM employee
+        WHERE active = true
+    </select>
+
+    <update id="deleteByEmployeeId" parameterType="java.lang.Integer">
+        UPDATE employee
+        SET active = false
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <update id="enableByEmployeeId" parameterType="java.lang.Integer">
+        UPDATE employee
+        SET active = true
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <insert id="insertEmployee" parameterType="employee">
+        INSERT INTO employee (employee_account, employee_password, employee_name, employee_gender,
+                              employee_age, entry_time, staff, employee_message, is_coach)
+        VALUES (#{employeeAccount}, #{employeePassword}, #{employeeName}, #{employeeGender},
+                #{employeeAge}, #{entryTime}, #{staff}, #{employeeMessage}, #{isCoach})
+    </insert>
+
+    <update id="updateEmployeeByEmployeeId" parameterType="employee">
+        UPDATE employee
+        SET employee_id = #{employeeId},
+            employee_password = #{employeePassword},
+            employee_name    = #{employeeName},
+            employee_gender  = #{employeeGender},
+            employee_age     = #{employeeAge},
+            staff            = #{staff},
+            employee_message = #{employeeMessage},
+            is_coach         = #{isCoach}
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <select id="selectByEmployeeId" parameterType="java.lang.Integer" resultType="employee">
+        SELECT *
+        FROM employee
+        WHERE employee_id = #{employeeId}
+    </select>
+
+    <select id="selectByEmployeeAccount" parameterType="java.lang.String" resultType="employee">
+        SELECT *
+        FROM employee
+        WHERE employee_account = #{employeeAccount}
+    </select>
+
+    <select id="selectByEmployeeAccountAndPassword" resultType="employee">
+        SELECT *
+        FROM employee
+        WHERE employee_account = #{employeeAccount}
+        AND employee_password = #{employeePassword}
+        AND is_coach = true
+        AND active = true;
+    </select>
+
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM employee
+        WHERE active = true
+    </select>
+
+</mapper>

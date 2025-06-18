@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="employeeCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="employeeCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="employeeCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4" th:text="'The home page of ' + ${employee.employeeName}"></h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">HomePage</li>
+                </ol>
+
+            </div>
+        </main>
+        <footer th:replace="employeeCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="employeeCommon::common-scripts"></div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header">
+</head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+  <div th:replace="adminCommon::common-sidenav"></div>
+
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid px-4">
+        <h1 class="mt-4">Feedback Management</h1>
+
+        <ol class="breadcrumb mb-4">
+          <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+          <li class="breadcrumb-item active"><a th:href="@{/equipment/selEquipment}">Equipment Management</a></li>
+          <li class="breadcrumb-item active">Equipment Feedback</li>
+        </ol>
+
+        <div class="card mb-4">
+          <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Equipment Feedback
+          </div>
+
+          <div class="card-body">
+            <table id="datatablesSimple">
+              <thead>
+              <tr>
+                <th>Feedback ID</th>
+                <th>Member Account</th>
+                <th>Member Name</th>
+                <th>Equipment ID</th>
+                <th>Equipment Name</th>
+                <th>Content</th>
+                <th>Time Create</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr th:each="fee:${feedbackEquipmentList}">
+                <td th:text="${fee.feedbackId}">Feedback ID</td>
+                <td th:text="${fee.memberAccount}">Member Account</td>
+                <td th:text="${fee.memberName}">Member Name</td>
+                <td th:text="${fee.equipmentId}">Equipment ID</td>
+                <td th:text="${fee.equipmentName}">Equipment Name</td>
+                <td th:text="${fee.content}">Content</td>
+                <td th:text="${fee.timeCreated}">Time Create</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer th:replace="adminCommon::common-footer"></footer>
+  </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+<script>
+    function del() {
+        let msg = "Are you sure you want to delete it?";
+        if (confirm(msg) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

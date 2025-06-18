@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Registration Information</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/course/selCourse}">Course Management</a></li>
+                    <li class="breadcrumb-item active">Registration Information</li>
+                </ol>
+
+                <div class="card mb-4">
+
+                    <!--Show when courseOrderList is empty (no one is enrolled in the course)-->
+                    <div th:if="${#lists.isEmpty(courseOrderList)}">
+                        <table class="table table-hover">
+                            <tr>
+                                <td align="center">No registration information yet!</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!--Show when courseOrderList is not empty (the course is already enrolled)-->
+                    <div th:if="${not #lists.isEmpty(courseOrderList)}">
+                        <table class="table table-hover">
+                            <tr>
+                                <td text-align="center">Course Number:</td>
+                                <td th:text="${courseOrderList[0].courseId}">Course Number</td>
+                            </tr>
+
+                            <tr>
+                                <td text-align="center">Course Name:</td>
+                                <td th:text="${courseOrderList[0].courseName}">Course Name</td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Course Start Time:</td>
+                                <td th:text="${courseOrderList[0].courseBegin}">Course start time</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                        </table>
+                        <table class="table table-hover">
+                            <tr>
+                                <td colspan="2"><strong>Enrolled Members:</strong></td>
+                            </tr>
+                            <div th:each="order:${courseOrderList}">
+                                <tr th:if="${order.status.equals('accepted')}">
+                                    <td th:text="${order.memberAccount}">无</td>
+                                    <td th:text="${order.memberName}">无</td>
+                                    <td>
+                                        <a th:href="@{/course/delCourseOrder(courseId=${order.courseId}, courseOrderId=${order.courseOrderId})}"
+                                           style="text-decoration: none">
+                                            <input type="button" class="btn btn-sm btn-outline-danger" value="Delete">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </div>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                        </table>
+                        <table class="table table-hover">
+                            <tr>
+                                <td colspan="2"><strong>Waiting Members:</strong></td>
+                            </tr>
+                            <div th:each="order:${courseOrderList}">
+                                <tr th:if="${order.status.equals('waiting')}">
+                                    <td th:text="${order.memberAccount}">无</td>
+                                    <td th:text="${order.memberName}">无</td>
+                                    <td>
+                                        <a th:href="@{/course/updateAcceptCourseOrder(courseId=${order.courseId}, courseOrderId=${order.courseOrderId})}"
+                                           style="text-decoration: none">
+                                            <input type="button" class="btn btn-sm btn-outline-primary" value="Accept">
+                                        </a>
+                                        <a th:href="@{/class/delCourseOrder(courseId=${order.courseId}, courseOrderId=${order.courseOrderId})}"
+                                           style="text-decoration: none">
+                                            <input type="button" class="btn btn-sm btn-outline-danger" value="Refuse">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </div>
+                        </table>
+                    </div>
+
+                    <a th:href="@{/course/selCourse}" style="text-align:center;margin-top:10px;margin-bottom:20px">
+                        <input type="submit" class="btn btn-outline-secondary" value="Back">
+                    </a>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+</body>
+</html>

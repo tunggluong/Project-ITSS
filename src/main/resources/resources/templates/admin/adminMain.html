@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Admin Homepage</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">Homepage</li>
+                </ol>
+                <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-primary text-white mb-4">
+                            <div class="card-body">Total number of people</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <span class="small text-white" th:text="${humanTotal}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-warning text-white mb-4">
+                            <div class="card-body">Number of employees</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <span class="small text-white" th:text="${employeeTotal}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-success text-white mb-4">
+                            <div class="card-body">Number of members</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <span class="small text-white" th:text="${memberTotal}"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-danger text-white mb-4">
+                            <div class="card-body">Number of equipments</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <span class="small text-white" th:text="${equipmentTotal}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                Revenue last 10 days
+                            </div>
+                            <div class="card-body">
+                                <canvas id="barDay" width="100%" height="40"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                Revenue last 12 months
+                            </div>
+                            <div class="card-body">
+                                <canvas id="barMonth" width="100%" height="40"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                Revenue last 4 quarters
+                            </div>
+                            <div class="card-body">
+                                <canvas id="barQuarter" width="100%" height="40"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar me-1"></i>
+                                Revenue last 3 years
+                            </div>
+                            <div class="card-body">
+                                <canvas id="barYear" width="100%" height="40"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+<script th:inline="javascript">
+    var revenueDayList = [[${revenueDayList}]];
+    var revenueMonthList = [[${revenueMonthList}]];
+    var revenueQuarterList = [[${revenueQuarterList}]];
+    var revenueYearList = [[${revenueYearList}]];
+</script>
+<script src="/static/assets/demo/chart-bar-revenue-day.js" th:src="@{/assets/demo/chart-bar-revenue-day.js}"></script>
+<script src="/static/assets/demo/chart-bar-revenue-month.js" th:src="@{/assets/demo/chart-bar-revenue-month.js}"></script>
+<script src="/static/assets/demo/chart-bar-revenue-quarter.js" th:src="@{/assets/demo/chart-bar-revenue-quarter.js}"></script>
+<script src="/static/assets/demo/chart-bar-revenue-year.js" th:src="@{/assets/demo/chart-bar-revenue-year.js}"></script>
+</body>
+</html>

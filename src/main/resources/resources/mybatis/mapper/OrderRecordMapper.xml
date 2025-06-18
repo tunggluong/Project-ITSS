@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.OrderRecordMapper">
+
+    <select id="selectRevenueByNPreviousDay" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT SUM(price)
+        FROM order_record
+        WHERE DATE(time_created) = DATE(NOW() - INTERVAL #{numDay} DAY);
+    </select>
+
+    <select id="selectRevenueByNPreviousMonth" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT SUM(price)
+        FROM order_record
+        WHERE YEAR(time_created) = YEAR(CURRENT_DATE - INTERVAL #{numMonth} MONTH)
+        AND MONTH(time_created) = MONTH(CURRENT_DATE - INTERVAL #{numMonth} MONTH);
+    </select>
+
+    <select id="selectRevenueByNPreviousQuarter" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT SUM(price)
+        FROM order_record
+        WHERE YEAR(time_created) = YEAR(CURRENT_DATE - INTERVAL #{numQuarter} QUARTER)
+        AND QUARTER(time_created) = QUARTER(CURRENT_DATE - INTERVAL #{numQuarter} QUARTER);
+    </select>
+
+    <select id="selectRevenueByNPreviousYear" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT SUM(price)
+        FROM order_record
+        WHERE YEAR(time_created) = YEAR(CURRENT_DATE - INTERVAL #{numYear} YEAR)
+    </select>
+
+</mapper>

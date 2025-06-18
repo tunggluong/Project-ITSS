@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.MemberMapper">
+
+    <select id="findAll" resultType="member">
+        SELECT *
+        FROM member
+        WHERE active = true
+    </select>
+
+    <insert id="insertMember" parameterType="member">
+        INSERT INTO member (member_account, member_password, member_name, member_gender, member_age, member_height,
+                            member_weight, member_phone)
+        VALUES (#{memberAccount}, #{memberPassword}, #{memberName}, #{memberGender}, #{memberAge}, #{memberHeight},
+                #{memberWeight}, #{memberPhone})
+    </insert>
+
+    <update id="updateMemberByMemberAccount" parameterType="member">
+        UPDATE member
+        SET member_account  = #{memberAccount},
+            member_password = #{memberPassword},
+            member_name     = #{memberName},
+            member_gender   = #{memberGender},
+            member_age      = #{memberAge},
+            member_height   = #{memberHeight},
+            member_weight   = #{memberWeight},
+            member_phone    = #{memberPhone}
+        WHERE member_account = #{memberAccount}
+    </update>
+
+    <select id="selectByAccountAndPassword" resultType="member">
+        SELECT *
+        FROM member
+        WHERE member_account = #{memberAccount}
+            AND member_password = #{memberPassword}
+            AND active = true
+    </select>
+
+    <update id="deleteByMemberAccount" parameterType="java.lang.String">
+        UPDATE member
+        SET active = false
+        WHERE member_account = #{memberAccount}
+    </update>
+
+    <update id="enableByMemberAccount" parameterType="java.lang.String">
+        UPDATE member
+        SET active = true
+        WHERE member_account = #{memberAccount}
+    </update>
+
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM member
+        WHERE active = true
+    </select>
+
+    <select id="selectByMemberAccount" parameterType="java.lang.String" resultType="member">
+        SELECT *
+        FROM member
+        WHERE member_account = #{memberAccount}
+    </select>
+
+</mapper>

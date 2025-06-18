@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="employeeCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="employeeCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="employeeCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Employee Information</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/staff}">HomePage</a></li>
+                    <li class="breadcrumb-item active">Employee Information</li>
+                </ol>
+
+                <div class="card mb-4">
+                    <table class="table table-hover">
+                        <tr>
+                            <td text-align="center">Employee Account:</td>
+                            <td th:text="${employee.employeeAccount}"></td>
+                        </tr>
+                        <tr>
+                            <td text-align="center">Name:</td>
+                            <td th:text="${employee.employeeName}"></td>
+                        </tr>
+                        <tr>
+                            <td text-align="center">Gender:</td>
+                            <td th:text="${employee.employeeGender}"></td>
+                        </tr>
+                        <tr>
+                            <td text-align="center">Age:</td>
+                            <td th:text="${employee.employeeAge}"></td>
+                        </tr>
+                        <tr>
+                            <td text-align="center">Entry Time:</td>
+                            <td th:text="${employee.entryTime}"></td>
+                        </tr>
+                        <tr>
+                            <td text-align="center">Position:</td>
+                            <td th:text="${employee.staff}"></td>
+                        </tr>
+                        <tr>
+                            <td text-align="center">Message:</td>
+                            <td th:text="${employee.employeeMessage}"></td>
+                        </tr>
+                    </table>
+                    <div style="text-align:center;margin-bottom:15px">
+                        <a th:href="@{/staff/toUpdateInfo}">
+                            <input type="button" class="btn btn-outline-primary" value="Update">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="employeeCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="employeeCommon::common-scripts"></div>
+</body>
+</html>

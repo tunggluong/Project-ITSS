@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+  <div th:replace="adminCommon::common-sidenav"></div>
+
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid px-4">
+        <h1 class="mt-4">Room Management</h1>
+
+        <ol class="breadcrumb mb-4">
+          <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+          <li class="breadcrumb-item active">Room Management</li>
+        </ol>
+
+        <div class="card mb-4">
+          <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Room Information List
+          </div>
+          <div class="card-body">
+            <table id="datatablesSimple">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Operation</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr th:each="room:${roomList}">
+                <td th:text="${room.roomId}">ID</td>
+                <td th:text="${room.roomName}">Name</td>
+                <td>
+                  <a th:href="@{/room/toUpdateRoom(roomId=${room.roomId})}"
+                     style="text-decoration: none">
+                    <input type="button" class="btn btn-sm btn-outline-secondary" value="Update">
+                  </a>
+                  <a th:href="@{/room/delRoom(roomId=${room.roomId})}"
+                     style="text-decoration: none">
+                    <input type="button" class="btn btn-sm btn-outline-danger"
+                           onclick="return del()" value="Delete">
+                  </a>
+                  <a th:href="@{/feedback/toViewFeedbackRoom(roomId=${room.roomId})}"
+                     style="text-decoration: none">
+                    <input type="button" class="btn btn-sm btn-outline-primary" value="View Feedback">
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:20px;margin-bottom:20px">
+          <a th:href="@{/room/toAddRoom}">
+            <input type="button" class="btn btn-outline-success" value="Add room">
+          </a>
+        </div>
+      </div>
+    </main>
+    <footer th:replace="adminCommon::common-footer"></footer>
+  </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+<script>
+    function del() {
+        let msg = "You sure you want to delete it？";
+        if (confirm(msg) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

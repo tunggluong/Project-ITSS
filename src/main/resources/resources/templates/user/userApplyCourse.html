@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="userCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="userCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="userCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Enrollment</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/toUserMain}">HomePage</a></li>
+                    <li class="breadcrumb-item active">Enrollment</li>
+                </ol>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Course Information List
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Number</th>
+                                <th>Name</th>
+                                <th>Time</th>
+                                <th>Duration</th>
+                                <th>Coach Name</th>
+                                <th>Price</th>
+                                <th>Type</th>
+                                <th>Operation</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <div th:each="course:${courseList}">
+                                <tr th:if='${not courseOrderIdList.contains(course.courseId) and course.status.equals("accepted")}'>
+                                    <td th:text="${course.courseId}">ID</td>
+                                    <td th:text="${course.courseName}">Name</td>
+                                    <td th:text="${course.courseBegin}">Time</td>
+                                    <td th:text="${course.courseTime}">Duration</td>
+                                    <td th:text="${course.coachName}">Coach Name</td>
+                                    <td th:text="${course.price}">Price</td>
+                                    <td th:text="${course.courseType}">Type</td>
+                                    <td>
+                                        <a th:href="@{/user/applyCourse(courseId=${course.courseId})}"
+                                           style="text-decoration: none">
+                                            <input type="button" class="btn btn-sm btn-outline-success" value="Registration">
+                                        </a>
+                                        <a th:href="@{/user/userOtherFeedbackCourse(courseId=${course.courseId})}"
+                                           style="text-decoration: none">
+                                            <input type="button" class="btn btn-sm btn-outline-primary" value="View Feedback">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="userCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="userCommon::common-scripts"></div>
+</body>
+</html>

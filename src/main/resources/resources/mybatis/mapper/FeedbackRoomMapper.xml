@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.FeedbackRoomMapper">
+
+    <select id="findAll" resultType="feedbackRoom">
+        SELECT feedback_room.feedback_id, feedback_room.member_account, member.member_name,
+        feedback_room.room_id, room.room_name, feedback_room.content, feedback_room.time_created
+        FROM feedback_room
+        INNER JOIN room ON feedback_room.room_id = room.room_id
+        INNER JOIN member ON feedback_room.member_account = member.member_account
+        WHERE feedback_room.active = true
+    </select>
+
+    <update id="deleteByFeedbackId" parameterType="java.lang.Integer">
+        UPDATE feedback_room
+        SET active = false
+        WHERE feedback_id = #{feedbackId}
+    </update>
+
+    <update id="enableByFeedbackId" parameterType="java.lang.Integer">
+        UPDATE feedback_room
+        SET active = true
+        WHERE feedback_id = #{feedbackId}
+    </update>
+
+    <insert id="insertFeedbackRoom" parameterType="feedbackRoom">
+        INSERT INTO feedback_room (member_account, room_id, content)
+        VALUES (#{memberAccount}, #{roomId}, #{content})
+    </insert>
+
+    <update id="updateByFeedbackId" parameterType="feedbackRoom">
+        UPDATE feedback_room
+        SET content       = #{content}
+        WHERE feedback_id = #{feedbackId}
+    </update>
+
+    <select id="selectByFeedbackId" parameterType="java.lang.Integer" resultType="feedbackRoom">
+        SELECT *
+        FROM feedback_room
+        WHERE feedback_id = #{feedbackId}
+    </select>
+
+    <select id="selectByMemberAccount" parameterType="java.lang.String" resultType="feedbackRoom">
+        SELECT feedback_room.feedback_id, feedback_room.member_account, member.member_name,
+        feedback_room.room_id, room.room_name, feedback_room.content, feedback_room.time_created
+        FROM feedback_room
+        INNER JOIN room ON feedback_room.room_id = room.room_id
+        INNER JOIN member ON feedback_room.member_account = member.member_account
+        WHERE feedback_room.member_account = #{memberAccount} AND feedback_room.active = true;
+    </select>
+
+    <select id="selectByRoomId" parameterType="java.lang.Integer" resultType="feedbackRoom">
+        SELECT feedback_room.feedback_id, feedback_room.member_account, member.member_name,
+        feedback_room.room_id, room.room_name, feedback_room.content, feedback_room.time_created
+        FROM feedback_room
+        INNER JOIN member ON feedback_room.member_account = member.member_account
+        INNER JOIN room ON feedback_room.room_id = room.room_id
+        WHERE feedback_room.room_id = #{roomId} AND feedback_room.active = true;
+    </select>
+
+</mapper>

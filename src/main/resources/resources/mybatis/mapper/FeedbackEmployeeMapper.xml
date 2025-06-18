@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.FeedbackEmployeeMapper">
+
+    <select id="findAll" resultType="feedbackEmployee">
+        SELECT feedback_employee.feedback_id, feedback_employee.member_account, member.member_name,
+        feedback_employee.employee_id, employee.employee_name, feedback_employee.content, feedback_employee.time_created
+        FROM feedback_employee
+        INNER JOIN employee ON feedback_employee.employee_id = employee.employee_id
+        INNER JOIN member ON feedback_employee.member_account = member.member_account
+        WHERE feedback_employee.active = true
+    </select>
+
+    <update id="deleteByFeedbackId" parameterType="java.lang.Integer">
+        UPDATE feedback_employee
+        SET active = false
+        WHERE feedback_id = #{feedbackId}
+    </update>
+
+    <update id="enableByFeedbackId" parameterType="java.lang.Integer">
+        UPDATE feedback_employee
+        SET active = true
+        WHERE feedback_id = #{feedbackId}
+    </update>
+
+    <insert id="insertFeedbackEmployee" parameterType="feedbackEmployee">
+        INSERT INTO feedback_employee (member_account, employee_id, content)
+        VALUES (#{memberAccount}, #{employeeId}, #{content})
+    </insert>
+
+    <update id="updateByFeedbackId" parameterType="feedbackEmployee">
+        UPDATE feedback_employee
+        SET content       = #{content}
+        WHERE feedback_id = #{feedbackId}
+    </update>
+
+    <select id="selectByFeedbackId" parameterType="java.lang.Integer" resultType="feedbackEmployee">
+        SELECT feedback_employee.feedback_id, feedback_employee.member_account, member.member_name,
+        feedback_employee.employee_id, employee.employee_name, feedback_employee.content, feedback_employee.time_created
+        FROM feedback_employee
+        INNER JOIN employee ON feedback_employee.employee_id = employee.employee_id
+        INNER JOIN member ON feedback_employee.member_account = member.member_account
+        WHERE feedback_id = #{feedbackId}
+    </select>
+
+    <select id="selectByMemberAccount" parameterType="java.lang.String" resultType="feedbackEmployee">
+        SELECT feedback_employee.feedback_id, feedback_employee.member_account, member.member_name,
+            feedback_employee.employee_id, employee.employee_name, feedback_employee.content, feedback_employee.time_created
+        FROM feedback_employee
+        INNER JOIN employee ON feedback_employee.employee_id = employee.employee_id
+        INNER JOIN member ON feedback_employee.member_account = member.member_account
+        WHERE feedback_employee.member_account = #{memberAccount} AND feedback_employee.active = true
+    </select>
+
+    <select id="selectByEmployeeId" parameterType="java.lang.Integer" resultType="feedbackEmployee">
+        SELECT feedback_employee.feedback_id, feedback_employee.member_account, member.member_name,
+                feedback_employee.employee_id, employee.employee_name, feedback_employee.content, feedback_employee.time_created
+        FROM feedback_employee
+        INNER JOIN member ON feedback_employee.member_account = member.member_account
+        INNER JOIN employee ON feedback_employee.employee_id = employee.employee_id
+        WHERE feedback_employee.employee_id = #{employeeId} AND feedback_employee.active = true;
+    </select>
+
+</mapper>

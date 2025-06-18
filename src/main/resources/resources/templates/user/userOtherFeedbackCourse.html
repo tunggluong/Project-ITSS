@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="userCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="userCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="userCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Feedback</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/toUserMain}">HomePage</a></li>
+                    <li class="breadcrumb-item active">Course Feedback</li>
+                </ol>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Course Feedback List
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Member Name</th>
+                                <th>Feedback</th>
+                                <th>Time</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="fee:${feedbackCourseList}">
+                                <td th:text="${fee.memberName}">Name</td>
+                                <td th:text="${fee.content}">Feedback</td>
+                                <td th:text="${fee.timeCreated}">Time</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <form th:action="@{/user/addFeedbackCourse}" method="post" name="addForm"
+                      onsubmit="return beforeSubmit(this)">
+                    <input type="hidden" name="courseId" th:value="${courseId}"/>
+                    <textarea class="form-control" placeholder="Write your feedback here. Fewer than 256 characters." id="content" name="content" rows="3"></textarea>
+                    <div style="text-align:center;margin-bottom:15px;margin-top:20px">
+                        <input type="submit" class="btn btn-outline-success" value="Submit Feedback">
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer th:replace="userCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="userCommon::common-scripts"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="/static/js/scripts.js" th:src="@{js/scripts.js}"></script>
+<script>
+  function beforeSubmit(addForm) {
+    var content = document.getElementById('content').value;
+    if (content.length <= 0) {
+        alert("You must type something to submit");
+        return false;
+    }
+    if (content.length > 255) {
+        alert("Your feedback is too long!");
+        return false;
+    }
+    return true;
+  }
+
+</script>
+</body>
+</html>

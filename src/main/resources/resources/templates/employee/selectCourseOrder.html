@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="employeeCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="employeeCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="employeeCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Course Management</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/staff}">HomePage</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/staff/myCourse}">Course Management</a></li>
+                    <li class="breadcrumb-item active">Student Information</li>
+                </ol>
+
+                <div class="card mb-4">
+
+                    <!--Show when courseOrderList is empty (no one is enrolled in the course)-->
+                    <div th:if="${#lists.isEmpty(courseOrderList)}">
+                        <table class="table table-hover">
+                            <tr>
+                                <td align="center">No student yet!</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!--Show when courseOrderList is not empty (the course is already enrolled)-->
+                    <div th:if="${not #lists.isEmpty(courseOrderList)}">
+                        <table class="table table-hover">
+                            <tr>
+                                <td text-align="center">Course Number:</td>
+                                <td th:text="${courseOrderList[0].courseId}">Course Number</td>
+                            </tr>
+
+                            <tr>
+                                <td text-align="center">Course Name:</td>
+                                <td th:text="${courseOrderList[0].courseName}">Course Name</td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Course Start Time:</td>
+                                <td th:text="${courseOrderList[0].courseBegin}">Course start time</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                            </tr>
+                        </table>
+                        <table class="table table-hover">
+                            <tr>
+                                <td colspan="2"><strong>Enrolled Members:</strong></td>
+                            </tr>
+                            <div th:each="order:${courseOrderList}">
+                                <tr th:if="${order.status.equals('accepted')}">
+                                    <td th:text="${order.memberAccount}"></td>
+                                    <td th:text="${order.memberName}"></td>
+                                </tr>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="employeeCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="employeeCommon::common-scripts"></div>
+</body>
+</html>
