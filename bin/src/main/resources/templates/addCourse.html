@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Add Course</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/course/selCourse}">Course Management</a></li>
+                    <li class="breadcrumb-item active">Add Course</li>
+                </ol>
+
+                <div class="card mb-4">
+
+                    <form th:action="@{/course/addCourse}" method="post" name="addForm"
+                          onsubmit="return beforeSubmit(this)">
+                        <table class="table table-hover">
+                            <tr>
+                                <td text-align="center">Name:</td>
+                                <td><input type="text" class="form-control" placeholder="Course Title" name="courseName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Time:</td>
+                                <td><input type="text" class="form-control" placeholder="dd-mm-yyyy hh:mm" name="courseBegin">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Duration:</td>
+                                <td><input type="text" class="form-control" placeholder="xx minutes" name="courseTime">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Coach:</td>
+                                <td>
+                                    <select name="coachId" class="form-select" id="selective-coach" placeholder="Pick a coach...">
+                                        <option th:each="emp:${employeeList}" th:value="${emp.employeeId}" th:text="${T(java.lang.String).format('%s - %s', emp.employeeId, emp.employeeName)}"></option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Price:</td>
+                                <td><input type="number" class="form-control" placeholder="Price" name="price">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Course Type:</td>
+                                <td><input type="text" class="form-control" placeholder="e.g. Gym 3 months" name="courseType">
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="text-align:center;margin-top:20px;margin-bottom:20px">
+                            <input type="submit" class="btn btn-outline-success" value="ADD">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+<script type="text/javascript">
+    function beforeSubmit(addForm) {
+        if (addForm.courseId.value == "") {
+            alert("Please enter the course ID!")
+            return false;
+        }
+        if (addForm.courseName.value == "") {
+            alert("Please enter a course name！")
+            return false;
+        }
+        if (addForm.courseBegin.value == "") {
+            alert("Please enter course time！")
+            return false;
+        }
+        if (addForm.courseTime.value == "") {
+            alert("Please enter the duration of the course！")
+            return false;
+        }
+        if (addForm.coach.value == "") {
+            alert("Please enter coach！")
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Equipment Management</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+                    <li class="breadcrumb-item active">Equipment Management</li>
+                </ol>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Equipment Information List
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                            <tr>
+                                <th>Equipment ID</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Remark Information</th>
+                                <th>Room ID</th>
+                                <th>Operation</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="equ:${equipmentList}">
+                                <td th:text="${equ.equipmentId}">ID</td>
+                                <td th:text="${equ.equipmentName}">Name</td>
+                                <td th:text="${equ.equipmentStatus}">Status</td>
+                                <td th:text="${equ.equipmentMessage}">Message</td>
+                                <td th:text="${equ.roomId}">Room ID</td>
+                                <td>
+                                    <a th:href="@{/equipment/toUpdateEquipment(equipmentId=${equ.equipmentId})}"
+                                       style="text-decoration: none">
+                                        <input type="button" class="btn btn-sm btn-outline-primary" value="Update">
+                                    </a>
+                                    <a th:href="@{/equipment/delEquipment(equipmentId=${equ.equipmentId})}"
+                                       style="text-decoration: none">
+                                        <input type="button" class="btn btn-sm btn-outline-danger"
+                                               onclick="return del()" value="Delete">
+                                    </a>
+                                    <a th:href="@{/feedback/toViewFeedbackEquipment(equipmentId=${equ.equipmentId})}"
+                                       style="text-decoration: none">
+                                        <input type="button" class="btn btn-sm btn-outline-primary" value="View Feedback">
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:20px;margin-bottom:20px">
+                    <a th:href="@{/equipment/toAddEquipment}">
+                        <input type="button" class="btn btn-outline-success" value="Add Equipment Information">
+                    </a>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+<script>
+    function del() {
+        let msg = "Are you sure you want to delete it?";
+        if (confirm(msg) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

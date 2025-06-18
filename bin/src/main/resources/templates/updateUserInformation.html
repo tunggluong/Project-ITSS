@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="userCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="userCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="userCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Update User Information</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/toUserMain}">HomePage</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/user/toUserInfo}">User Information</a></li>
+                    <li class="breadcrumb-item active">Update User Information</li>
+                </ol>
+
+                <div class="card mb-4">
+
+                    <form th:action="@{/user/updateInfo}" method="post" name="updateForm"
+                          onsubmit="return beforeSubmit(this)">
+                        <table class="table table-hover">
+                            <tr>
+                                <td text-align="center">Member Account</td>
+                                <td><input type="text" class="form-control" readonly="readonly"
+                                           th:value="${member.memberAccount}" name="memberAccount">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Name:</td>
+                                <td><input type="text" class="form-control" th:value="${member.memberName}"
+                                           name="memberName"></td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Password:</td>
+                                <td><input type="text" class="form-control" th:value="${member.memberPassword}"
+                                           name="memberPassword">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Gender:</td>
+                                <td><input type="text" class="form-control" th:value="${member.memberGender}"
+                                           name="memberGender">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Age:</td>
+                                <td><input type="text" class="form-control" th:value="${member.memberAge}"
+                                           name="memberAge">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Contact Information:</td>
+                                <td><input type="text" class="form-control" th:value="${member.memberPhone}"
+                                           name="memberPhone">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Height:</td>
+                                <td><input type="text" class="form-control" th:value="${member.memberHeight}"
+                                           name="memberHeight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">Weight:</td>
+                                <td><input type="text" class="form-control" th:value="${member.memberWeight}"
+                                           name="memberWeight">
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="text-align:center;margin-bottom:15px">
+                            <input type="submit" class="btn btn-outline-success" value="Update">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="userCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="userCommon::common-scripts"></div>
+<script type="text/javascript">
+    function beforeSubmit(updateForm) {
+        let phone = /^[0][0-9]{9}$/;// Set regular expression for cell phone number
+        if (!phone.test(updateForm.memberPhone.value)) {
+            alert("Wrong cell phone number!");
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

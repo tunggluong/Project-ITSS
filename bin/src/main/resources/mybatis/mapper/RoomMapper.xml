@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.RoomMapper">
+
+    <select id="findAll" resultType="room">
+        SELECT *
+        FROM room
+    </select>
+
+    <delete id="deleteByRoomId" parameterType="java.lang.Integer">
+        DELETE
+        FROM room
+        WHERE room_id = #{roomId}
+    </delete>
+
+    <insert id="insertRoom" parameterType="room">
+        INSERT INTO room (room_name)
+        VALUES (#{roomName})
+    </insert>
+
+    <update id="updateRoomByRoomId" parameterType="room">
+        UPDATE room
+        SET room_name     = #{roomName}
+        WHERE room_id = #{roomId}
+    </update>
+
+    <select id="selectByRoomId" parameterType="java.lang.Integer" resultType="room">
+        SELECT *
+        FROM room
+        WHERE room_id = #{roomId}
+    </select>
+
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM room
+    </select>
+
+</mapper>

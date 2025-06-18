@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Add Room</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/room/selRoom}">Room Management</a></li>
+                    <li class="breadcrumb-item active">Add Room</li>
+                </ol>
+
+                <div class="card mb-4">
+
+                    <form th:action="@{/room/addRoom}" method="post" name="addForm"
+                          onsubmit="return beforeSubmit(this)">
+                        <table class="table table-hover">
+                            <tr>
+                                <td text-align="center">Name:</td>
+                                <td><input type="text" class="form-control" placeholder="Room Name" name="roomName"></td>
+                            </tr>
+                        </table>
+                        <div style="text-align:center;margin-top:20px;margin-bottom:20px">
+                            <input type="submit" class="btn btn-outline-success" value="ADD">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+<script type="text/javascript">
+    function beforeSubmit(addForm) {
+        if (addForm.roomName.value == "") {
+            alert("Please enter the room name！")
+            return false;
+        }
+
+        return true;
+    }
+</script>
+</body>
+</html>

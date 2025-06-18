@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.CourseOrderMapper">
+
+    <select id="findAll" resultType="courseOrder">
+        SELECT course_order_id, course_order.course_id, course_name, coach_id, employee_name,
+               course_order.member_account, member_name, course_begin, status
+        FROM course_order
+        INNER JOIN course ON course_order.course_id = course.course_id
+        INNER JOIN member ON course_order.member_account = member.member_account
+        INNER JOIN employee ON course.coach_id = employee.employee_id
+    </select>
+
+    <insert id="insertCourseOrder" parameterType="courseOrder">
+        INSERT INTO course_order(course_id, member_account, status)
+        VALUES (#{courseId}, #{memberAccount}, #{status})
+    </insert>
+
+    <select id="selectCourseOrderByMemberAccount" parameterType="java.lang.String" resultType="courseOrder">
+        SELECT course_order_id, course_order.course_id, course_name, coach_id, employee_name,
+               course_order.member_account, member_name, course_begin, status
+        FROM course_order
+        INNER JOIN course ON course_order.course_id = course.course_id
+        INNER JOIN member ON course_order.member_account = member.member_account
+        INNER JOIN employee ON course.coach_id = employee.employee_id
+        WHERE course_order.member_account = #{memberAccount}
+    </select>
+
+    <delete id="deleteByCourseOrderId" parameterType="java.lang.Integer">
+        DELETE
+        FROM course_order
+        WHERE course_order_id = #{courseOrderId}
+    </delete>
+
+    <select id="selectMemberByCourseIdAndMemberAccount" parameterType="map" resultType="courseOrder">
+        SELECT course_order_id, course_order.course_id, course_name, coach_id, employee_name,
+               course_order.member_account, member_name, course_begin, status
+        FROM course_order
+        INNER JOIN course ON course_order.course_id = course.course_id
+        INNER JOIN member ON course_order.member_account = member.member_account
+        INNER JOIN employee ON course.coach_id = employee.employee_id
+        WHERE course_order.course_id = #{courseId}
+          AND course_order.member_account = #{memberAccount}
+    </select>
+
+    <select id="selectMemberOrderList" parameterType="java.lang.Integer" resultType="courseOrder">
+        SELECT course_order_id, course_order.course_id, course_name, coach_id, employee_name,
+               course_order.member_account, member_name, course_begin, status
+        FROM course_order
+        INNER JOIN course ON course_order.course_id = course.course_id
+        INNER JOIN member ON course_order.member_account = member.member_account
+        INNER JOIN employee ON course.coach_id = employee.employee_id
+        WHERE course_order.course_id = #{courseId}
+    </select>
+
+    <select id="updateStatusByOrderId" parameterType="java.lang.Integer">
+        UPDATE course_order
+        SET status = "accepted"
+        WHERE course_order_id = #{courseOrderId}
+    </select>
+
+    <select id="deleteOrderByOrderId" parameterType="java.lang.Integer">
+        DELETE
+        FROM course_order
+        WHERE course_order_id = #{courseOrderId}
+    </select>
+
+</mapper>

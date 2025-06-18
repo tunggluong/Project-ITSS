@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Update Equipment Information</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/equipment/selEquipment}">Equipment Management</a></li>
+                    <li class="breadcrumb-item active">Update Equipment Information</li>
+                </ol>
+
+                <div class="card mb-4">
+
+                    <form th:action="@{/equipment/updateEquipment}" method="post">
+                        <div th:each="equ:${equipmentList}">
+                            <table class="table table-hover">
+                                <tr>
+                                    <td text-align="center">ID:</td>
+                                    <td><input type="text" class="form-control" readonly="readonly"
+                                               th:value="${equ.equipmentId}" name="equipmentId"></td>
+                                </tr>
+                                <tr>
+                                    <td text-align="center">Name:</td>
+                                    <td><input type="text" class="form-control" th:value="${equ.equipmentName}"
+                                               name="equipmentName"></td>
+                                </tr>
+                                <tr>
+                                    <td text-align="center">Status:</td>
+                                    <td><input type="text" class="form-control" th:value="${equ.equipmentStatus}"
+                                               name="equipmentStatus">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td text-align="center">Message:</td>
+                                    <td><input type="text" class="form-control" th:value="${equ.equipmentMessage}"
+                                               name="equipmentMessage">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td text-align="center">Room ID:</td>
+                                    <td>
+                                        <select name="roomId" class="form-select" id="selective-room" placeholder="Pick a room...">
+                                            <option th:each="room:${roomList}" th:value="${room.roomId}"
+                                                    th:selected="${room.roomId.equals(equ.roomId)}"
+                                                    th:text="${T(java.lang.String).format('%s - %s', room.roomId, room.roomName)}"></option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div style="text-align:center;margin-bottom:15px">
+                                <input type="submit" class="btn btn-outline-success" value="Update">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+  <div th:replace="adminCommon::common-sidenav"></div>
+
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid px-4">
+        <h1 class="mt-4">Update Room Information</h1>
+
+        <ol class="breadcrumb mb-4">
+          <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+          <li class="breadcrumb-item"><a th:href="@{/room/selRoom}">Room Management</a></li>
+          <li class="breadcrumb-item active">Update Equipment Information</li>
+        </ol>
+
+        <div class="card mb-4">
+
+          <form th:action="@{/room/updateRoom}" method="post">
+            <div th:each="room:${roomList}">
+              <table class="table table-hover">
+                <tr>
+                  <td text-align="center">Room ID:</td>
+                  <td><input type="text" class="form-control" readonly="readonly"
+                             th:value="${room.roomId}" name="roomId">
+                  </td>
+                </tr>
+                <tr>
+                  <td text-align="center">Name:</td>
+                  <td><input type="text" class="form-control" th:value="${room.roomName}"
+                             name="roomName"></td>
+                </tr>
+
+              </table>
+              <div style="text-align:center;margin-bottom:15px">
+                <input type="submit" class="btn btn-outline-success" value="Update">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <footer th:replace="adminCommon::common-footer"></footer>
+  </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+</body>
+</html>

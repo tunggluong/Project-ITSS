@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common-header">
+
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="gym-management-system"/>
+    <meta name="author" content="ITSS-Gym"/>
+    <title>Gym Management System - Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet"/>
+    <link href="/static/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+            crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<!-- navigation bar -->
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark" th:fragment="common-navbar">
+    <!-- Navbar Brand-->
+    <a class="navbar-brand ps-3" th:href="@{/userLogin}">Gym Management System</a>
+    <!-- Sidebar Toggle-->
+    <button class="btn btn-link btn-sm order-1 order-lg-0 ms-auto me-0 me-md-3 my-2 my-md-0 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+    <!-- Navbar-->
+    <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0 me-lg-4">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+<!--Sidebar-->
+<div id="layoutSidenav_nav" th:fragment="common-sidenav">
+    <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+
+                <!--Management Area-->
+                <div class="sb-sidenav-menu-heading">Management</div>
+                <a class="nav-link" th:href="@{/user/toUserInfo}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                    Personal Information
+                </a>
+                <a class="nav-link collapsed" href="#Course" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-calendar-alt"></i></div>
+                    Course Management
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" th:href="@{/user/toApplyCourse}">Enrollment and Course Selection</a>
+                        <a class="nav-link" th:href="@{/user/toUserCourse}">My Course</a>
+                    </nav>
+                </div>
+                <a class="nav-link collapsed" href="#Feedback" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsFeedback" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fas fa-comments"></i></div>
+                    Feedback
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLayoutsFeedback" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" th:href="@{/user/userFeedbackEmployee}">Employee</a>
+                        <a class="nav-link" th:href="@{/user/userFeedbackEquipment}">Equipment</a>
+                        <a class="nav-link" th:href="@{/user/userFeedbackCourse}">Course</a>
+                        <a class="nav-link" th:href="@{/user/userFeedbackRoom}">Room</a>
+                    </nav>
+                </div>
+
+                <!--Source Code-->
+                <div class="sb-sidenav-menu-heading">Link</div>
+                <a class="nav-link" href="https://github.com/ITSS-Gym/GymManagerSystem">
+                    <div class="sb-nav-link-icon"><i class="fab fa-github"></i></div>
+                    Source
+                </a>
+            </div>
+        </div>
+
+        <div class="sb-sidenav-footer">
+            <div class="small">Hello, Members</div>
+        </div>
+    </nav>
+</div>
+
+<!--页脚-->
+<footer class="py-4 bg-light mt-auto" th:fragment="common-footer">
+    <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+            <div class="text-muted">Copyright &copy; HUST.SoICT.HEDSPI.139314.Group22</div>
+        </div>
+    </div>
+</footer>
+
+<div th:fragment="common-scripts">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+    <script src="/static/js/scripts.js" th:src="@{/js/scripts.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/static/assets/demo/chart-area-demo.js" th:src="@{/assets/demo/chart-area-demo.js}"></script>
+    <script src="/static/assets/demo/chart-bar-demo.js" th:src="@{/assets/demo/chart-bar-demo.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="/static/js/datatables-simple-demo.js" th:src="@{/js/datatables-simple-demo.js}"></script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">Member Search</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/adminMain}">HomePage</a></li>
+                    <li class="breadcrumb-item active">Member Search</li>
+                </ol>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Member Search
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <form th:action="@{/member/selByCard}" method="post">
+                                <div style="width: 310px;margin-bottom: 15px">
+                                    <div align="left" style="float:left">
+                                        <input type="text" class="form-control"
+                                               onkeypress="return event.keyCode>=48&&event.keyCode<=57"
+                                               ng-pattern="/[^a-zA-Z]/"
+                                               name="memberAccount">
+                                        </div>
+                                    <div align="right">
+                                        <input type="submit" class="btn btn-outline-success" value="Search">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <table class="table table-hover">
+                            <thead class="bg-light">
+                            <tr>
+                                <th scope="col" class="border-0">Member Account</th>
+                                <th scope="col" class="border-0">Name</th>
+                                <th scope="col" class="border-0">Card Processing Time</th>
+                                <th scope="col" class="border-0">Gender</th>
+                                <th scope="col" class="border-0">Age</th>
+                                <th scope="col" class="border-0">Contact Information</th>
+                                <th scope="col" class="border-0">Height</th>
+                                <th scope="col" class="border-0">Weight</th>
+                                <th scope="col" class="border-0">Operation</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr th:each="mem:${memberList}">
+                                <td th:text="${mem.memberAccount}">Member Account</td>
+                                <td th:text="${mem.memberName}">Name</td>
+                                <td th:text="${mem.cardTime}">Card Processing Time</td>
+                                <td th:text="${mem.memberGender}">Gender</td>
+                                <td th:text="${mem.memberAge}">Age</td>
+                                <td th:text="${mem.memberPhone}">Contact Information</td>
+                                <td th:text="${mem.memberHeight}">Height</td>
+                                <td th:text="${mem.memberWeight}">Weight</td>
+                                <td>
+                                    <a th:href="@{/member/toUpdateMember(memberAccount=${mem.memberAccount})}">
+                                        <input type="button" class="btn btn-sm btn-outline-primary" value="Update">
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+</body>
+</html>

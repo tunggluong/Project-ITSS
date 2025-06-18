@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="userCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="userCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+  <div th:replace="userCommon::common-sidenav"></div>
+
+  <div id="layoutSidenav_content">
+    <main>
+      <div class="container-fluid px-4">
+        <h1 class="mt-4">Feedback</h1>
+
+        <ol class="breadcrumb mb-4">
+          <li class="breadcrumb-item"><a th:href="@{/toUserMain}">HomePage</a></li>
+          <li class="breadcrumb-item active">Equipment Feedback</li>
+        </ol>
+
+        <div class="card mb-4">
+          <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Equipment Feedback List
+          </div>
+          <div class="card-body">
+            <table id="datatablesSimple">
+              <thead>
+              <tr>
+                <th>Equipment Name</th>
+                <th>Feedback</th>
+                <th>Time</th>
+                <th>Operation</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <tr th:each="fee:${feedbackEquipmentList}">
+                <td th:text="${fee.EquipmentName}">Name</td>
+                <td th:text="${fee.content}">Feedback</td>
+                <td th:text="${fee.timeCreated}">Time</td>
+                <td>
+                  <a th:href="@{/user/toUpdateFeedbackEquipment(feedbackId=${fee.feedbackId})}"
+                     style="text-decoration: none">
+                    <input type="button" class="btn btn-sm btn-outline-secondary" value="Update">
+                  </a>
+                  <a th:href="@{/user/delFeedbackEquipment(feedbackId=${fee.feedbackId})}"
+                     style="text-decoration: none">
+                    <input type="button" class="btn btn-sm btn-outline-danger"
+                           onclick="return del()" value="Delete">
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:20px;margin-bottom:20px">
+          <a th:href="@{/user/toAddFeedbackEquipment}">
+            <input type="button" class="btn btn-outline-success" value="Add Feedback">
+          </a>
+        </div>
+      </div>
+    </main>
+    <footer th:replace="userCommon::common-footer"></footer>
+  </div>
+</div>
+
+<div th:include="userCommon::common-scripts"></div>
+<script>
+    function del() {
+        let msg = "You sure you want to delete it？";
+        if (confirm(msg) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

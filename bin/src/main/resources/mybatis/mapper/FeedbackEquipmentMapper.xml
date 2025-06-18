@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.FeedbackEquipmentMapper">
+
+    <select id="findAll" resultType="feedbackEquipment">
+        SELECT feedback_equipment.feedback_id, feedback_equipment.member_account, member.member_name,
+        feedback_equipment.equipment_id, equipment.equipment_name, feedback_equipment.content, feedback_equipment.time_created
+        FROM feedback_equipment
+        INNER JOIN equipment ON feedback_equipment.equipment_id = equipment.equipment_id
+        INNER JOIN member ON feedback_equipment.member_account = member.member_account
+    </select>
+
+    <delete id="deleteByFeedbackId" parameterType="java.lang.Integer">
+        DELETE
+        FROM feedback_equipment
+        WHERE feedback_id = #{feedbackId}
+    </delete>
+
+    <insert id="insertFeedbackEquipment" parameterType="feedbackEquipment">
+        INSERT INTO feedback_equipment (member_account, equipment_id, content)
+        VALUES (#{memberAccount}, #{equipmentId}, #{content})
+    </insert>
+
+    <update id="updateByFeedbackId" parameterType="feedbackEquipment">
+        UPDATE feedback_equipment
+        SET content       = #{content}
+        WHERE feedback_id = #{feedbackId}
+    </update>
+
+    <select id="selectByFeedbackId" parameterType="java.lang.Integer" resultType="feedbackEquipment">
+        SELECT feedback_equipment.feedback_id, feedback_equipment.member_account, member.member_name,
+        feedback_equipment.equipment_id, equipment.equipment_name, feedback_equipment.content, feedback_equipment.time_created
+        FROM feedback_equipment
+        INNER JOIN equipment ON feedback_equipment.equipment_id = equipment.equipment_id
+        INNER JOIN member ON feedback_equipment.member_account = member.member_account
+        WHERE feedback_id = #{feedbackId}
+    </select>
+
+    <select id="selectByMemberAccount" parameterType="java.lang.String" resultType="feedbackEquipment">
+        SELECT feedback_equipment.feedback_id, feedback_equipment.member_account, member.member_name,
+        feedback_equipment.equipment_id, equipment.equipment_name, feedback_equipment.content, feedback_equipment.time_created
+        FROM feedback_equipment
+        INNER JOIN equipment ON feedback_equipment.equipment_id = equipment.equipment_id
+        INNER JOIN member ON feedback_equipment.member_account = member.member_account
+        WHERE feedback_equipment.member_account = #{memberAccount}
+    </select>
+
+    <select id="selectByEquipmentId" parameterType="java.lang.Integer" resultType="feedbackEquipment">
+        SELECT feedback_equipment.feedback_id, feedback_equipment.member_account, member.member_name,
+        feedback_equipment.equipment_id, equipment.equipment_name, feedback_equipment.content, feedback_equipment.time_created
+        FROM feedback_equipment
+        INNER JOIN member ON feedback_equipment.member_account = member.member_account
+        INNER JOIN equipment ON feedback_equipment.equipment_id = equipment.equipment_id
+        WHERE feedback_equipment.equipment_id = #{equipmentId};
+    </select>
+
+</mapper>
